@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html> <!--sets to HTLML-->
 <head>
   <title>Ticketee</title>
+  <!--This is for including stylesheets -->
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <%= csrf_meta_tags %> <!--This is for protecting the forms from cross-site request forgery (csrf) -->
 </head>
 <body>
-
-<%= yield %>
+<!--This code below renders all the 'flash' msgs that get defined (regardless of their name) and displays the notice set up in the controller -->
+<% flash.each do |key, value| %>
+	<div class='flash' id='<%= key %>'>
+		<%= value %>
+	</div>
+<% end %>
+			
+<%= yield %> 
 
 </body>
 </html>
