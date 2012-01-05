@@ -4,6 +4,8 @@ module NavigationHelpers
     
     when /the homepage/
       root_path
+    when /the project page for "([^\"]*)"/
+      project_path(Project.find_by_name!($1))
     when /the new client page/
       new_client_path
     when /the clients page/
