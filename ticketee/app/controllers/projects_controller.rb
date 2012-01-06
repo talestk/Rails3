@@ -13,11 +13,15 @@ class ProjectsController < ApplicationController
     #hashWithIndifferenceAccess ( can reference a String key by using a matching symbol and vice-versa)    
     @project = Project.new(params[:project]) #to access the name field use params[:project][:name]
 
-    @project.save # saves the new object into projects table
-
-    flash[:notice] = "Project has been created."
-    #redirect_to method takes either a path or object to redirect to as a String (project_path(@project))
-    redirect_to @project
+    if @project.save # saves the new object into projects table
+      
+      flash[:notice] = "Project has been created."
+      #redirect_to method takes either a path or object to redirect to as a String (project_path(@project))
+      redirect_to @project
+    else
+      flash[:alert] = "Project has not been created." 
+      render :action =>"new"
+    end
   end
   
   def show
