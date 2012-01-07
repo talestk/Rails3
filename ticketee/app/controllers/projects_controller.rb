@@ -1,7 +1,10 @@
 class ProjectsController < ApplicationController
 
   def index
-    
+    # by calling all on the Project model we retriece all the records from the db as Project objects
+    # and they are available as an Array-like object ( therefore passing the test and defining the
+    # variable to the index.html.erb )
+    @projects = Project.all
   end
   
   def new
