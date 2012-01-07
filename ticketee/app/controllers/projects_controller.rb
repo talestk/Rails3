@@ -1,4 +1,9 @@
 class ProjectsController < ApplicationController
+  
+  # before filter are run before all the actions in the controller unless you specify (:only,:exept)
+  # find_project method sets up the @ project variable for you so no need for the:
+  # @project = Project.find(params[:id]) in these methods anymore.
+  before_filter :find_project, :only => [:show,:edit,:update,:destroy]
 
   def index
     # by calling all on the Project model we retriece all the records from the db as Project objects
@@ -28,7 +33,6 @@ class ProjectsController < ApplicationController
   end
   
   def show
-    #passing the params[:id] which gives a singleProject object that relates to a record in the database
     @project = Project.find(params[:id])
   end
 
@@ -37,7 +41,6 @@ class ProjectsController < ApplicationController
   end
   
   def update
-    @project = Project.find(params[:id])
     # update_attributes takes a hash of attributes identical to the ones passed to new or create, udates
     # those specified attributes on the object, and then saves them to the databse if they are valid
     if @project.update_attributes(params[:project])
@@ -50,9 +53,17 @@ class ProjectsController < ApplicationController
   end
   
   def destroy 
-    @project = Project.find(params[:id])
     @project.destroy
     flash[:notice] = "Project has been deleted."
     redirect_to projects_path
   end
+  
+  private
+    def find_project
+      #passing the params[:id] which gives a singleProject object that relates to a record in the database
+      @project = Project.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The project you were looking for could not be found."
+      redirect_to projects_path
+    end
 end
