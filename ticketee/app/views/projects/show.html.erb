@@ -10,3 +10,9 @@
 
 <!-- Updating Project -->
 <%= link_to "Edit Project", edit_project_path(@project) %>
+
+<!-- Deleting Project -->
+<!-- :method tells Rails which HTTP method this link should be using -->
+<!-- By using DELETE instead of destroy, we protect an important route for our controller by ensuring that we have to follow the link from the site to make the proper request to delete this resource-->
+<!-- The confirm method prompt, using JavaScript, a confirmation message -->
+<%= link_to "Delete Project", @project, :method=> :delete, :confirm => "Are you sure you want to delete this project?" %>
