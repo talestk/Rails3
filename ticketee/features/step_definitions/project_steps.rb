@@ -11,7 +11,7 @@ Then /^I should be on the project page for "([^\"]*)"$/ do |name|
 end
 
 When /^I fill in "([^\"]*)" with "([^\"]*)"$/ do |arg1, name|
-  fill_in('Name', :with => name )
+  fill_in(arg1, :with => name )
 end
 
 When /^I press "([^\"]*)"$/ do |link|
