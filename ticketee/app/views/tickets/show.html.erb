@@ -1,5 +1,7 @@
 <div id='ticket'>
 	<h2><%= @ticket.title %></h2>
+	<!-- Array argument passed to the link_to method (edit_project_ticket_path)-->
+	<%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
 	<!-- The method simple_format converts the line breaks entered into the description field into HTMl break tags <br> -->
 	<%= simple_format(@ticket.description) %>
 </div>
