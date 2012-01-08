@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html> <!--sets to HTLML-->
+
 <head>
   <title><%= @title || "Ticketee" %></title>
   <!--This is for including stylesheets -->
@@ -7,6 +8,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %> <!--This is for protecting the forms from cross-site request forgery (csrf) -->
 </head>
+
 <body>
 <!--This code below renders all the 'flash' msgs that get defined (regardless of their name) and displays the notice set up in the controller -->
 <% flash.each do |key, value| %>
@@ -16,6 +18,14 @@
 <% end %>
 			
 <h1><%= link_to "Ticketee", root_path %></h1>
+<divid='nav'>
+<nav>
+	<% if user_signed_in? %>
+		Signed in as <%= current_user.email %>
+	<% else %>
+		<%= link_to "Sign up", new_user_registration_path %>
+	<% end %>
+</nav>
 
 <%= yield %> 
 
