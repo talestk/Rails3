@@ -1,5 +1,5 @@
 Given /^there is a project called "([^\"]*)"$/ do |name|
-  Factory(:project, :name => name)
+  @project = Factory(:project, :name => name)
 end
 
 Given /^I follow "([^\"]*)"$/ do |name|
@@ -20,8 +20,4 @@ end
 
 Then /^I should see "([^\"]*)"$/ do |message|
   page.should have_content(message)
-end
-
-Then /^I should not see "([^\"]*)"$/ do |message|
-  page.should_not have_content(message)
 end
