@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   
+  before_filter :authorize_admin!, :except => [:index, :show]
+  
+  
   # before filter are run before all the actions in the controller unless you specify (:only,:exept)
   # find_project method sets up the @ project variable for you so no need for the:
   # @project = Project.find(params[:id]) in these methods anymore.

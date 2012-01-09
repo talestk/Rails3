@@ -1,6 +1,29 @@
 require 'spec_helper'
 
 describe ProjectsController do
+  # multi-line this method defines a user method, which returns a newly created and confirmed user
+  let(:user) do 
+    user = Factory(:user)
+    user.confirm!
+    user
+  end
+  
+  let(:project) { Factory(:project) }
+  
+  context "standard users" do
+    {"new" => "get",
+      "create" => "post",
+      "edit"=> "get",
+      "update" => "put",
+      "destroy" => "delete"}.each do |action, method|
+        it "cannot access the new #{action} action" do
+          sign_in(:user, user)
+          send(method, action.dup, :id => project.id)
+          response.should redirect_to(root_path)
+          flash[:alert].should eql("You must be an admin to do that.")
+        end
+    end
+  end
   it "displays an error for a missing project" do
     get :show, :id => "not-here" # GET request to the show action for the ProjectsController
     response.should redirect_to(projects_path) # response should take us to project_path (redirect_to)

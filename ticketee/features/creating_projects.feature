@@ -4,8 +4,12 @@ Feature: Create projects
 	I want to create them easily 
 	
 Background:
+  Given there are the following users:
+    | email                 | password    | admin |
+    | user@ticketee.com     | password    | true  |
+  And I am signed in as them
 	Given I am on the homepage
-	When I navigate to the new project creation page
+	When I follow "New Project"
 	
 Scenario: Creating a project
 	And I create a new project
