@@ -7,4 +7,11 @@ module ApplicationHelper
       end
     end
   end
+  
+  # the admins_only method takes a block, which is the code between the do and end
+  # and run it inside the method block.call, but only if current.user.try(:admin?) = true
+  def admins_only(&block)
+    block.call if current_user.try(:admin?)
+    nil
+  end
 end
