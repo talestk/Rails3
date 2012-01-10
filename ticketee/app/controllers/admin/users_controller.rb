@@ -9,6 +9,8 @@ class Admin::UsersController < Admin::BaseController
     
   def create
     @user = User.new(params[:user])
+    # it sets the admin attribute on the user 
+    @user.admin = params[:user][:admin] = "1"
     
     if @user.save
       flash[:notice] = "User has been created."

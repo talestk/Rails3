@@ -21,3 +21,7 @@ end
 Then /^I should see "([^\"]*)"$/ do |message|
   page.should have_content(message)
 end
+
+When /^I check "([^\"]*)"$/ do |button|
+  check(button)
+end
