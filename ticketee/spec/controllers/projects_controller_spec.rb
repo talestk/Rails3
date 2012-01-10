@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe ProjectsController do
   # multi-line this method defines a user method, which returns a newly created and confirmed user
-  let(:user) do 
-    user = Factory(:user)
-    user.confirm!
-    user
-  end
+  let(:user) { create_user! }  
   
   let(:project) { Factory(:project) }
   

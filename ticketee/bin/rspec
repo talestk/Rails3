@@ -12,5 +12,6 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path("../../Gemfile",
 
 require 'rubygems'
 require 'bundler/setup'
+require 'rspec/core'
 
 load Gem.bin_path('rspec-core', 'rspec')
