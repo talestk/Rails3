@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
-  
+
   before_filter :authorize_admin!, :except => [:index, :show]
-  
+  before_filter :authenticate_user!, :only =>[:show]
   
   # before filter are run before all the actions in the controller unless you specify (:only,:exept)
   # find_project method sets up the @ project variable for you so no need for the:
@@ -64,7 +64,12 @@ class ProjectsController < ApplicationController
   private
     def find_project
       #passing the params[:id] which gives a singleProject object that relates to a record in the database
-      @project = Project.find(params[:id])
+      # the readable_by method returns a scope of only the projects the user is allowed to view
+      @project = if current_user.admin?
+          Project.find(params[:id])
+        else
+          Project.readable_by(current_user).find(params[:id])
+        end
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The project you were looking for could not be found."
       redirect_to projects_path

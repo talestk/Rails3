@@ -20,6 +20,7 @@
 <% end %>
 
 <%= link_to "New Ticket", new_project_ticket_path(@project) %>
+<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 
 <ul id'tickets'>
 	<% @project.tickets.each do |ticket| %>
