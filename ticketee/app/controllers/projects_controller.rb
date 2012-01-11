@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_filter :authorize_admin!, :except => [:index, :show]
-  before_filter :authenticate_user!, :only =>[:show]
+  before_filter :authenticate_user!, :only =>[:index, :show]
   
   # before filter are run before all the actions in the controller unless you specify (:only,:exept)
   # find_project method sets up the @ project variable for you so no need for the:
@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
     # by calling all on the Project model we retriece all the records from the db as Project objects
     # and they are available as an Array-like object ( therefore passing the test and defining the
     # variable to the index.html.erb )
-    @projects = Project.all
+      @projects = Project.for(current_user).all
   end
   
   def new
@@ -65,11 +65,7 @@ class ProjectsController < ApplicationController
     def find_project
       #passing the params[:id] which gives a singleProject object that relates to a record in the database
       # the readable_by method returns a scope of only the projects the user is allowed to view
-      @project = if current_user.admin?
-          Project.find(params[:id])
-        else
-          Project.readable_by(current_user).find(params[:id])
-        end
+      @project = Project.for(current_user).find(params[:id]) # defined in model self.for
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The project you were looking for could not be found."
       redirect_to projects_path

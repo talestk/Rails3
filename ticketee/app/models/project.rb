@@ -14,4 +14,9 @@ class Project < ActiveRecord::Base
   scope :readable_by, lambda { |user| 
     joins(:permissions).where(:permissions => { :action => "view",
                                                 :user_id => user.id })}
+                                                
+  def self.for(user)
+    # ternary statement, it substitute if/else
+    user.admin? ? Project : Project.readable_by(user)
+  end
 end
