@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   # if it fails the others before_filters will not run (save CPU cycles)
-  before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :authenticate_user! #, :except => [:index, :show]
   before_filter :find_project
   before_filter :find_ticket, :only => [:show,:edit,:update,:destroy]
     
@@ -51,7 +51,13 @@ class TicketsController < ApplicationController
   private
    
     def find_project
-      @project = Project.find(params[:project_id])
+      @project = Project.for(current_user).find(params[:project_id])
+      # it will retrieve a Project only if the current_user has permission to view
+      # that project or an admin, otherwise an ActiveRecord exception will be thrown and rescued 
+      # here showing the users a message.
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The project you were looking for could not be found."
+      redirect_to root_path
     end
     
     def find_ticket
