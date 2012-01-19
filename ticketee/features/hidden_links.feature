@@ -86,7 +86,6 @@ Feature: Hidden Links
 		And I follow "Shiny!"
 		Then I should see the "Edit" link
 
-  
   Scenario: Delete ticket link is shown to user with permission
   	Given "user@ticketee.com" can view the "TextMate 2" project
 		And "user@ticketee.com" can delete tickets in the "TextMate 2" project
